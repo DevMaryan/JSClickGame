@@ -18,6 +18,7 @@
             <input type="text" id="playerName" placeholder="Player name"/>
             <label for="playerColor">Choose color</label>
             <input type="color" id="playerColor"/>
+            <label for="selectLevel">Choose difficulty</label>
             <select id="selectLevel">
                 <option value="easy">Easy</option>
                 <option value="medium">Medium</option>
@@ -114,7 +115,7 @@
         }
 
         
-        function Bot(gameLevel){
+        function Bot(){
             var bot = document.getElementById("bot");
             setTimeout(function(gameLevel) {
                 if(botSum < 95040){
