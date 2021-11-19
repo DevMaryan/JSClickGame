@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="main.css"/>
+    <title>Welcome</title>
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div id="game-settings">
+        <h3>Welcome to chase the frog!</h3>
+        <div id="game-controls">
+            <input type="text" id="playerName" placeholder="Player name"/>
+            <label for="playerColor">Choose color</label>
+            <input type="color" id="playerColor"/>
+            <select id="selectLevel">
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+            </select>
+            <button id="start" class="btn" onClick="Start()">Start</button>
+        </div>
+    </div>
+    <div id="game-result">
+        <h3>GAME OVER</h3>
+        <div id="game-results">
+            <div id="game-status"></div>
+            <div id="game-score"></div>
+            <button onClick="Reset()" class="btn">Reset</button>
+        </div>
+    </div>
+    <div id="main">
+        <div id="parent-human">
+            <div id="human">
+
+            </div>
+            <span class="player">Player</span>
+            <span class="finish"><i class="fas fa-flag-checkered"></i></span>
+        </div>
+    
+        <div id="parent-bot">
+            <div id="bot">
+
+            </div>
+            <span class="animal"><i class="fas fa-frog"></i></span>
+            <span class="finish"><i class="fas fa-flag-checkered"></i></span>
+        </div>
+        <div id="control-panel">
+            <button onClick="Player()" class="btn">Click Me!</button>
+            <button onClick="Reset()" class="btn">Reset</button>
+            <div id="points">Points <input type="number" id="thepoints" value="0" disabled></div>
+        </div>
+    </div>
+
+    <script>
+        let playerSum = 0;
+        let botSum = 0;
+        var gameLevel = 0;
+
+        let selectLevel = document.getElementById("selectLevel");
+        selectLevel.addEventListener('click', function(){
+            if(selectLevel.value == "easy"){
+                gameLevel = 3000;
+            }else if(selectLevel.value == "hard"){
+                gameLevel = 100;
+            }else if(selectLevel.value == "medium"){
+                gameLevel = 1000;
+            }
+        })
+
+        function Start(){
+            const playerName = document.getElementById("playerName").value;
+            const playerColor = document.getElementById("playerColor").value;
+            let thePlayer = document.getElementsByClassName("player")[0];
+            if(playerName == ""){
+                thePlayer.innerText = "Player";
+            }else{
+                thePlayer.innerText = playerName;
+            }
+
+            document.getElementById("game-settings").style.display = "none";
+        }
+        function Player(){
+            Bot();
+            if(playerSum < 90288){
+                // Player color
+                const playerColor = document.getElementById("playerColor").value;
+                let PlayerLine = document.getElementsByClassName("click");
+                for(var i = 0; i < PlayerLine.length; i ++){
+                    document.documentElement.style.setProperty('--playerC-background-color', playerColor);
+                }
+                // on user click create box
+                let userClick = document.createElement("div");
+                userClick.classList.add("click");
+                human.appendChild(userClick)
+                // Add points for player
+                let playerWidth = document.getElementsByClassName("click");
+                for(var i = 0; i < playerWidth.length; i ++){
+                    playerSum = playerSum + playerWidth[i].clientWidth;
+                }
+
+                Points();
+            }else{
+                Result()
+                let gameStatus = document.getElementById("game-status");
+                gameStatus.innerText = "You Won";
+            }
+
+        }
+
+        
+        function Bot(gameLevel){
+            var bot = document.getElementById("bot");
+            setTimeout(function(gameLevel) {
+                if(botSum < 95040){
+                    var ctrlbot = document.createElement("div");
+                    ctrlbot.classList.add("bot");
+                    bot.appendChild(ctrlbot);
+                    let botWidth = document.getElementsByClassName("bot");
+                    for(var i = 0; i < botWidth.length; i ++){
+                        botSum = botSum + botWidth[i].clientWidth;
+                    }
+                }else{
+                    Result()
+                    let gameStatus = document.getElementById("game-status");
+                    gameStatus.innerText = "Bot Won";
+                }
+
+            },gameLevel)
+        }
+
+        function Reset(){
+            document.getElementById("human").innerHTML = "";
+            document.getElementById("bot").innerHTML = "";
+            document.getElementById("thepoints").value = 0;
+            playerSum = 0;
+            botSum = 0;
+            document.getElementById("game-result").style.display = "none";
+            document.getElementById("game-settings").style.display = "block";
+        }
+
+        function Points(){
+            var points = parseInt(document.getElementById("thepoints").value);
+            points = points + 10;
+            document.getElementById("thepoints").value = points;
+        }
+
+        function Result(){
+            let gameResult = document.getElementById("game-result").style.display = "block";
+            let gameScore = document.getElementById("game-score");
+            var totalPoints = parseInt(document.getElementById("thepoints").value);
+            gameScore.innerHTML = totalPoints;
+  
+        }
+
+    </script>
+</body>
+</html>
